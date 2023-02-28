@@ -18,35 +18,48 @@ public class sortings {
         generateNumbers();
         int[] numbers = readNumbers(filePath);
         int choice = 0;
+        int export = 0;
         while (choice != 6) {
             printMenu();
             choice = new java.util.Scanner(System.in).nextInt();
+            wantExport();
+            export = new java.util.Scanner(System.in).nextInt();
             switch (choice) {
                 case 1:
                     bubbleSort(numbers);
                     writeNumbers(filePathBubble, numbers);
-                    exportToConsole(numbers);
+                    if(export == 1) {
+                        exportToConsole(numbers);
+                    }
                     break;
                 case 2:
                     selectionSort(numbers);
                     writeNumbers(filePathSelection, numbers);
-                    exportToConsole(numbers);
+                    if(export == 1) {
+                        exportToConsole(numbers);
+                    }
                     break;
                 case 3:
                     sortings s = new sortings();
                     s.quickSort(numbers, 0, numbers.length - 1);
                     writeNumbers(filePathQuick, numbers);
-                    exportToConsole(numbers);
+                    if(export == 1) {
+                        exportToConsole(numbers);
+                    }
                     break;
                 case 4:
                     mergeSort(numbers);
                     writeNumbers(filePathMerge, numbers);
-                    exportToConsole(numbers);
+                    if(export == 1) {
+                        exportToConsole(numbers);
+                    }
                     break;
                 case 5:
                     heapSort(numbers);
                     writeNumbers(filePathHeap, numbers);
-                    exportToConsole(numbers);
+                    if(export == 1) {
+                        exportToConsole(numbers);
+                    }
                     break;
                 case 6:
                     System.out.println("Beenden...");
@@ -69,6 +82,12 @@ public class sortings {
         System.out.println("5. Heap Sort");
         System.out.println("6. Exit");
         System.out.print("Bitte wählen Sie eine Sortieralgorithmus aus: ");
+    }
+
+    public static void wantExport() {
+        System.out.println("Möchten Sie die Zahlen in die Konsole anzeigen lassen?");
+        System.out.println("1. Ja");
+        System.out.println("2. Nein");
     }
 
     public static void bubbleSort(int[] arr) {
