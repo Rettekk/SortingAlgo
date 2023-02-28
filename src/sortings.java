@@ -56,17 +56,120 @@ public class sortings {
     }
 
 
-    public void mergeSort() {
+    public static void mergeSort(int[] arr) {
+        int n = arr.length;
+        if (n < 2) {
+            return;
+        }
+        int mid = n / 2;
+        int[] left = new int[mid];
+        int[] right = new int[n - mid];
 
+        for (int i = 0; i < mid; i++) {
+            left[i] = arr[i];
+        }
+        for (int i = mid; i < n; i++) {
+            right[i - mid] = arr[i];
+        }
+
+        mergeSort(left);
+        mergeSort(right);
+
+        merge(left, right, arr);
     }
 
-    public void quickSort() {
+    public static void merge(int[] left, int[] right, int[] arr) {
+        int nL = left.length;
+        int nR = right.length;
+        int i = 0, j = 0, k = 0;
 
+        while (i < nL && j < nR) {
+            if (left[i] <= right[j]) {
+                arr[k++] = left[i++];
+            } else {
+                arr[k++] = right[j++];
+            }
+        }
+        while (i < nL) {
+            arr[k++] = left[i++];
+        }
+        while (j < nR) {
+            arr[k++] = right[j++];
+        }
     }
 
-    public void heapSort() {
 
+    public void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            int pivotIndex = partition(arr, low, high);
+            quickSort(arr, low, pivotIndex - 1);
+            quickSort(arr, pivotIndex + 1, high);
+        }
     }
+
+    private int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, i + 1, high);
+        return i + 1;
+    }
+
+    private void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+
+    public static void heapSort(int[] arr) {
+        int n = arr.length;
+
+        // Build heap (rearrange array)
+        for (int i = n / 2 - 1; i >= 0; i--)
+            heapify(arr, n, i);
+
+        // One by one extract an element from heap
+        for (int i = n - 1; i > 0; i--) {
+            // Move current root to end
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+
+            // call max heapify on the reduced heap
+            heapify(arr, i, 0);
+        }
+    }
+
+    static void heapify(int[] arr, int n, int i) {
+        int largest = i; // Initialize largest as root
+        int l = 2 * i + 1; // left = 2*i + 1
+        int r = 2 * i + 2; // right = 2*i + 2
+
+        // If left child is larger than root
+        if (l < n && arr[l] > arr[largest])
+            largest = l;
+
+        // If right child is larger than largest so far
+        if (r < n && arr[r] > arr[largest])
+            largest = r;
+
+        // If largest is not root
+        if (largest != i) {
+            int swap = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = swap;
+
+            // Recursively heapify the affected sub-tree
+            heapify(arr, n, largest);
+        }
+    }
+
 
     public static int[] readNumbers(String filePath) {
         try {
