@@ -17,9 +17,59 @@ public class sortings {
     public static void main(String[] args) {
         generateNumbers();
         int[] numbers = readNumbers(filePath);
+        int choice = 0;
+        while (choice != 6) {
+            printMenu();
+            choice = new java.util.Scanner(System.in).nextInt();
+            switch (choice) {
+                case 1:
+                    bubbleSort(numbers);
+                    writeNumbers(filePathBubble, numbers);
+                    exportToConsole(numbers);
+                    break;
+                case 2:
+                    selectionSort(numbers);
+                    writeNumbers(filePathSelection, numbers);
+                    exportToConsole(numbers);
+                    break;
+                case 3:
+                    sortings s = new sortings();
+                    s.quickSort(numbers, 0, numbers.length - 1);
+                    writeNumbers(filePathQuick, numbers);
+                    exportToConsole(numbers);
+                    break;
+                case 4:
+                    mergeSort(numbers);
+                    writeNumbers(filePathMerge, numbers);
+                    exportToConsole(numbers);
+                    break;
+                case 5:
+                    heapSort(numbers);
+                    writeNumbers(filePathHeap, numbers);
+                    exportToConsole(numbers);
+                    break;
+                case 6:
+                    System.out.println("Beenden...");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Bitte wählen Sie eine Sortieralgorithmus aus");
+                    break;
+            }
+        }
 
     }
 
+    public static void printMenu() {
+        System.out.println("Auswahl zwischen mehreren Sortieralgorithmen");
+        System.out.println("1. Bubble Sort");
+        System.out.println("2. Selection Sort");
+        System.out.println("3. Quick Sort");
+        System.out.println("4. Merge Sort");
+        System.out.println("5. Heap Sort");
+        System.out.println("6. Exit");
+        System.out.print("Bitte wählen Sie eine Sortieralgorithmus aus: ");
+    }
 
     public static void bubbleSort(int[] arr) {
         int n = arr.length;
@@ -31,6 +81,12 @@ public class sortings {
                     arr[j + 1] = temp;
                 }
             }
+        }
+    }
+
+    public static void exportToConsole(int[] numbers) {
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.println(numbers[i]);
         }
     }
 
